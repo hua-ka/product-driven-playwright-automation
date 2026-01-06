@@ -7,8 +7,7 @@ test('retrieve Salesforce access token', async () => {
     expect(instance_url).toBeDefined();
     expect(typeof access_token).toBe('string');
     expect(access_token.length).toBeGreaterThan(0);
-    console.log('Salesforce Access Token:', access_token);
-    console.log('Salesforce Instance URL:', instance_url);
+    console.log('Salesforce authentication succeeded');
 });
 
 
