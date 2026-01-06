@@ -21,7 +21,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test --project= ${{ matrix.project }} --reporter=list,html --workers=2
+      run: npx playwright test --project=${{ matrix.project }} --reporter=list,html --workers=2
       env: 
         SF_API_OAUTH2_URL: ${{ secrets.SF_API_OAUTH2_URL }}
         SF_API_CLIENT_ID: ${{ secrets.SF_API_CLIENT_ID }}
