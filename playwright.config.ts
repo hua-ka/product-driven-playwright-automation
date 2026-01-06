@@ -20,11 +20,11 @@ export default defineConfig({
         trace: 'retain-on-failure',
       },
     },
+    {
+      name: 'salesforce-api',
+      testDir: path.resolve(__dirname, 'apps', 'salesforce-api', 'tests')
+    }
     // Future projects (keep commented until you implement)
-    // {
-    //   name: 'salesforce-api',
-    //   testDir: path.resolve(__dirname, 'apps', 'salesforce-api', 'tests'),
-    // },
     // {
     //   name: 'conduit-api',
     //   testDir: path.resolve(__dirname, 'apps', 'conduit-api', 'tests'),
