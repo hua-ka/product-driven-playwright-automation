@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [ salesforce-api, web-ui ]
+        project: [ conduit-api, salesforce-api, web-ui ]
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
