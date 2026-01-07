@@ -1,5 +1,5 @@
 import {test, expect} from '@playwright/test';
-import {getSalesforceAccessToken} from '../src/utils/auth-utils.ts';
+import {getSalesforceAccessToken} from '../src/utils/salesforce-auth.utils.ts';
 
 test('retrieve Salesforce access token', async () => {
     const { access_token, instance_url } = await getSalesforceAccessToken();

@@ -13,21 +13,20 @@ export default defineConfig({
   reporter: [['html', { open: 'never' }]],
   projects: [
     {
+      name: 'conduit-api',
+      testDir: path.resolve(__dirname, 'apps', 'conduit-api', 'tests'),
+    },
+    {
+      name: 'salesforce-api',
+      testDir: path.resolve(__dirname, 'apps', 'salesforce-api', 'tests')
+    },
+    {
       name: 'web-ui',
       testDir: path.resolve(__dirname, 'apps', 'web-ui', 'tests'),
       use: {
         baseURL: process.env.UI_BASE_URL,
         trace: 'retain-on-failure',
       },
-    },
-    {
-      name: 'salesforce-api',
-      testDir: path.resolve(__dirname, 'apps', 'salesforce-api', 'tests')
     }
-    // Future projects (keep commented until you implement)
-    // {
-    //   name: 'conduit-api',
-    //   testDir: path.resolve(__dirname, 'apps', 'conduit-api', 'tests'),
-    // },
-  ],
+  ]
 });
