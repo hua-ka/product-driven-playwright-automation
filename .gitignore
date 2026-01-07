@@ -8,3 +8,12 @@ node_modules/
 /playwright/.auth/
 config/env/.env.*
 .DS_Store
+
+
+# env files (never commit secrets)
+**/.env
+**/.env.*
+
+# only commit example env files
+!**/.env.example
+!**/.env.*.example

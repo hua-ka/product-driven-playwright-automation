@@ -2,7 +2,9 @@
 
 A product-driven QA automation repository built with Playwright.
 
-Each folder under `apps/` represents a product-owned automation scope (similar to embedded QA ownership in modern product teams).
+This project follows a **product-embedded QA model**, where each product or system owns its own automation scope and test strategy.  
+The structure mirrors how modern product teams operate, with QA automation evolving alongside each product.
+
 
 ## Project Structure
 
@@ -16,6 +18,7 @@ product-driven-playwright-automation/
 ├── lib/                  # shared utilities/clients/helpers
 ├── config/env/           # environment configuration
 ├── playwright.config.ts  # global Playwright config (multi-project)
-└── package.json
+|── package.json
+└── README.md
 ```
 
