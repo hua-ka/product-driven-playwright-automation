@@ -22,10 +22,15 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test --project=${{ matrix.project }} --reporter=list,html --workers=2
-      env: 
+      env:
+        # Salesforce API Environment Variables
         SF_API_OAUTH2_URL: ${{ secrets.SF_API_OAUTH2_URL }}
         SF_API_CLIENT_ID: ${{ secrets.SF_API_CLIENT_ID }}
         SF_API_CLIENT_SECRET: ${{ secrets.SF_API_CLIENT_SECRET }}
+
+        # Conduit API Environment Variables
+        CONDUIT_API_USERNAME: ${{ secrets.CONDUIT_API_USERNAME }}
+        CONDUIT_API_PASSWORD: ${{ secrets.CONDUIT_API_PASSWORD }}
     - name: Upload Playwright Report
       uses: actions/upload-artifact@v4
       if: always()
