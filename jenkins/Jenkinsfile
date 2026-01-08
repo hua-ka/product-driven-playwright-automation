@@ -1,0 +1,71 @@
+pipeline {
+    
+    agent {
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.57.0-noble'
+            args '--ipc=host'
+            label 'docker-agent'
+        }
+    }
+
+    options { timestamps() }
+
+    tools {
+        nodejs 'Node_20' 
+    }
+
+    stages {
+
+        stage('Clean workspace') { steps { cleanWs() } }
+
+        stage('Checkout source code') { steps { checkout scm } }
+
+        stage('Verify Environment (inside Playwright image)') {
+            steps {
+                sh '''
+                    echo "Node:" && node -v && which node
+                    echo "npm:"  && npm -v  && which npm
+                    echo "Playwright:" && npx playwright --version
+                '''
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                    set -eux
+                    if [ -f package-lock.json ]; then
+                        npm ci
+                    else
+                        npm install
+                    fi
+                '''
+            }
+        }
+
+        stage('Run Playwright Tests') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'SF_API_OAUTH2_URL', variable: 'SF_API_OAUTH2_URL'),
+                    string(credentialsId: 'SF_API_CLIENT_ID', variable: 'SF_API_CLIENT_ID'),
+                    string(credentialsId: 'SF_API_CLIENT_SECRET', variable: 'SF_API_CLIENT_SECRET'),
+                    usernamePassword(credentialsId: 'CONDUIT_API_CREDS', usernameVariable: 'CONDUIT_API_USERNAME', passwordVariable: 'CONDUIT_API_PASSWORD')
+                ]) {
+                    sh '''
+                    npx playwright test --project=conduit-api --reporter=list,html --workers=2
+                    npx playwright test --project=salesforce-api --reporter=list,html --workers=2
+                    npx playwright test --project=web-ui --reporter=list,html --workers=2
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
+            cleanWs()
+        }
+    }
+}
